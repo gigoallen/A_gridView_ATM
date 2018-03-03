@@ -1,6 +1,7 @@
 package com.gigoallen.a_gridview_atm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,8 +12,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     //String[] func = {"餘額查詢", "交易明細", "最新消息", "投資理財", "離開" };
     //or Resources
@@ -57,7 +59,34 @@ public class MainActivity extends AppCompatActivity {
         GridView gridView = findViewById(R.id.grid);
         IconAdapter iconAdapter = new IconAdapter();
         gridView.setAdapter(iconAdapter);
+
+        //set listener  :目前不行耶！
+        //gridView.setOnItemClickListener(gvListener);
+        //set listerner , (this), 然後Alt+Enter 實作傾聽
+        gridView.setOnItemClickListener(this);
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        switch ((int)l){
+            case R.drawable.func_finance:
+                Intent intent = new Intent(MainActivity.this, FinanceActivity.class);
+                startActivity(intent);
+                break;
+            case R.drawable.func_balance:
+                Toast.makeText(MainActivity.this, "b", Toast.LENGTH_SHORT).show();
+                break;
+            case R.drawable.func_history:
+                Toast.makeText(MainActivity.this, "HIs", Toast.LENGTH_SHORT).show();
+                break;
+            case R.drawable.func_news:
+                Toast.makeText(MainActivity.this, "news", Toast.LENGTH_SHORT).show();
+                break;
+            case R.drawable.func_exit:
+                finish();
+        }
+    }
+
 
     class IconAdapter extends BaseAdapter{
 
